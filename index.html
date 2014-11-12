@@ -1,0 +1,152 @@
+<html>
+<head>
+	<title>Bouncing Balls</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<section>
+      <div class="info">
+         <h1>Biodiversity data: not just a hobby</h1>
+         <p>Millions of people around the world go out every day and collect data about biodiversity. Some of these observations are by professionals and academics, whose job it is to collect data, but many citizens also collect data voluntarily. This visualization uses data from the Global Biodiversity Information Facility (GBIF) and compares the number of observations of birds made by professionals with those made by citizens for every year since 2000.</p>
+         <ul id="years">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li class="selected"></li>
+         </ul>
+      </div>
+      <div>
+         <div id="total-citizens" class="score"><span></span>ocurrence records by citizens</div>
+         <div id="total-professionals" class="score"><span></span>ocurrence records by professionals</div>
+   		<canvas id="box2d-demo" width="202" height="601" style="background-color:transparent;"></canvas>
+   		<canvas id="box2d-demo2" width="202" height="601" style="background-color:transparent;"></canvas>
+      </div>
+   </section>
+   <script src="js/Box2dWeb-2.1.a.3.min.js"></script>
+	<script src="js/cit.js"></script>
+	<script src="js/prof.js"></script>
+   <script type="text/javascript">
+      var tot_cit  = document.getElementById('total-citizens');
+      var tot_pro  = document.getElementById('total-professionals');
+      var list     = document.getElementById('years');
+
+      window.data_orig = [
+                    {
+                      "year":2000,
+                      "count_cit":1271093,
+                      "count_pro":3207570
+                    },
+                    {
+                      "year":2001,
+                      "count_cit":1429905,
+                      "count_pro":3192843
+                    },
+                    {
+                      "year":2002,
+                      "count_cit":1779530,
+                      "count_pro":2784304
+                    },
+                    {
+                      "year":2003,
+                      "count_cit":2315200,
+                      "count_pro":2867324
+                    },
+                    {
+                      "year":2004,
+                      "count_cit":2851783,
+                      "count_pro":3054253
+                    },
+                    {
+                      "year":2005,
+                      "count_cit":3317581,
+                      "count_pro":3821678
+                    },
+                    {
+                      "year":2006,
+                      "count_cit":5016138,
+                      "count_pro":4347328
+                    },
+                    {
+                      "year":2007,
+                      "count_cit":6578331,
+                      "count_pro":6997602
+                    },
+                    {
+                      "year":2008,
+                      "count_cit":8153254,
+                      "count_pro":5823251
+                    },
+                    {
+                      "year":2009,
+                      "count_cit":11169250,
+                      "count_pro":6865211
+                    },
+                    {
+                      "year":2010,
+                      "count_cit":15127664,
+                      "count_pro":6279953
+                    },
+                    {
+                      "year":2011,
+                      "count_cit":19397264,
+                      "count_pro":6439256
+                    },
+                    {
+                      "year":2012,
+                      "count_cit":27352233,
+                      "count_pro":6209120
+                    },
+                    {
+                      "year":2013,
+                      "count_cit":35491610,
+                      "count_pro":4384066
+                    }
+                  ];
+      
+      localStorage.setItem('year_viz', JSON.stringify(window.data_orig[window.data_orig.length - 1]));
+
+      list.onclick = function(e) {changeYear(e);}
+
+      var changeYear = function(e) {
+         toggleSelected(e);
+         updateLocalYear();
+         run();
+      }
+
+      var toggleSelected = function(e) {
+         if (e.target.classList.contains('selected')) return false;
+         for (var i = 0; i < list.children.length; i++)  list.children[i].classList.remove('selected')
+         e.target.classList.toggle('selected');
+      }
+
+      var updateLocalYear = function(e) {
+         var pos = Array.prototype.indexOf.call(list.children,document.getElementsByClassName('selected')[0]);
+         localStorage.setItem('year_viz', JSON.stringify(window.data_orig[pos]));
+      }
+
+      var initValues = function() {
+         var values = JSON.parse(localStorage.getItem('year_viz'));
+         tot_cit.children[0].innerHTML = '<span>' + values.count_cit.toLocaleString()  + '</span>';
+         tot_pro.children[0].innerHTML = '<span>' + values.count_pro.toLocaleString()  + '</span>';
+      }
+
+      var run = function() {
+         initValues();
+         initPro();
+         initCit();
+      }
+      run();
+   </script>
+</body>
+</html>
+
