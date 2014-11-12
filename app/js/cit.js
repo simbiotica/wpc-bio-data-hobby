@@ -1,4 +1,4 @@
-function initPro() {
+function initCit() {
     (function() {
         
         // Init som useful stuff for easier access (don't need 'em all)
@@ -49,10 +49,12 @@ function initPro() {
                 this.callbacks();
 
                 var i = 0;
+                var timeout = 150;
                 var total = JSON.parse(localStorage.getItem('year_viz'));
-                    total = total.count_pro / 80000;
+                    timeout  = (total.year > 2010)? 650 : timeout;
+                    total = total.count_cit / 80000;
                 setTimeout(function() { 
-                    for (i; i < total/3; i++) {
+                    for (i; i < total/5; i++) {
                         var options = {};
                         var mod = i % 10;
                         if (mod < 4 && mod !=2)
@@ -65,7 +67,7 @@ function initPro() {
                     }
                 }, 0);
                 setTimeout(function() {
-                    for (i; i < total/3; i++) {
+                    for (i; i < total/3.3; i++) {
                         var options = {};
                             var mod = i % 10;
                             if (mod < 4 && mod !=2)
@@ -76,7 +78,7 @@ function initPro() {
                                 options.radius = 0.58;
                             add.random(options);
                     }
-                }, 250);
+                }, timeout);
                 // On my signal: Unleash hell.
                 (function hell() {
                     loop.step();
@@ -117,7 +119,7 @@ function initPro() {
                         y:  20,
                         height: 1,
                         width:7,     // 200 / 30
-                        rotate: -0.02,
+                        rotate: 0.02,
                         isStatic: true
                     });
                 },
@@ -141,11 +143,8 @@ function initPro() {
          
         var add = {
             random: function(options) {
-                var self = this;
-                setTimeout(function(){
-                    options = options || {};
-                    self.circle(options);
-                },500); 
+                options = options || {};
+                this.circle(options)
             },
             circle: function(options) {
                 var shape = new Circle(options);
@@ -255,8 +254,8 @@ function initPro() {
         
         var Shape = function(v) {
             this.id = Math.round(Math.random() * 1000000);
-            this.x = v.x || Math.random();
-            this.y = v.y || this.x;
+            this.x = v.x || Math.floor(Math.random() * 4) + 1;
+            this.y = v.y || Math.random();
             this.rotate = v.rotate || 0;
             this.angle = 0;
             // this.color = helpers.randomColor();
@@ -281,7 +280,7 @@ function initPro() {
                 ctx.translate(-(this.x) * SCALE, -(this.y) * SCALE);
                 ctx.rotate(this.rotate);
                 ctx.lineWidth   = 2;
-                ctx.strokeStyle = '#2f6593';
+                ctx.strokeStyle = 'rgb(37,87,127)';
                 ctx.fillStyle   = '#ffffff';
                 ctx.beginPath();
                 ctx.arc(this.x * SCALE, this.y * SCALE, this.radius * SCALE, 0, Math.PI * 2, true);
@@ -304,6 +303,6 @@ function initPro() {
         };
         Box.prototype = Shape;
         
-        init.start('box2d-demo2');
+        init.start('box2d-demo');
     })();
 }

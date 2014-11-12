@@ -1,4 +1,4 @@
-function initCit() {
+function initPro() {
     (function() {
         
         // Init som useful stuff for easier access (don't need 'em all)
@@ -49,12 +49,10 @@ function initCit() {
                 this.callbacks();
 
                 var i = 0;
-                var timeout = 150;
                 var total = JSON.parse(localStorage.getItem('year_viz'));
-                    timeout  = (total.year > 2010)? 650 : timeout;
-                    total = total.count_cit / 80000;
+                    total = total.count_pro / 80000;
                 setTimeout(function() { 
-                    for (i; i < total/5; i++) {
+                    for (i; i < total/3; i++) {
                         var options = {};
                         var mod = i % 10;
                         if (mod < 4 && mod !=2)
@@ -67,7 +65,7 @@ function initCit() {
                     }
                 }, 0);
                 setTimeout(function() {
-                    for (i; i < total/3.3; i++) {
+                    for (i; i < total/3; i++) {
                         var options = {};
                             var mod = i % 10;
                             if (mod < 4 && mod !=2)
@@ -78,7 +76,7 @@ function initCit() {
                                 options.radius = 0.58;
                             add.random(options);
                     }
-                }, timeout);
+                }, 250);
                 // On my signal: Unleash hell.
                 (function hell() {
                     loop.step();
@@ -119,7 +117,7 @@ function initCit() {
                         y:  20,
                         height: 1,
                         width:7,     // 200 / 30
-                        rotate: 0.02,
+                        rotate: -0.02,
                         isStatic: true
                     });
                 },
@@ -143,8 +141,11 @@ function initCit() {
          
         var add = {
             random: function(options) {
-                options = options || {};
-                this.circle(options)
+                var self = this;
+                setTimeout(function(){
+                    options = options || {};
+                    self.circle(options);
+                },500); 
             },
             circle: function(options) {
                 var shape = new Circle(options);
@@ -254,8 +255,8 @@ function initCit() {
         
         var Shape = function(v) {
             this.id = Math.round(Math.random() * 1000000);
-            this.x = v.x || Math.floor(Math.random() * 4) + 1;
-            this.y = v.y || Math.random();
+            this.x = v.x || Math.random();
+            this.y = v.y || this.x;
             this.rotate = v.rotate || 0;
             this.angle = 0;
             // this.color = helpers.randomColor();
@@ -280,7 +281,7 @@ function initCit() {
                 ctx.translate(-(this.x) * SCALE, -(this.y) * SCALE);
                 ctx.rotate(this.rotate);
                 ctx.lineWidth   = 2;
-                ctx.strokeStyle = '#2f6593';
+                ctx.strokeStyle = 'rgb(37,87,127)';
                 ctx.fillStyle   = '#ffffff';
                 ctx.beginPath();
                 ctx.arc(this.x * SCALE, this.y * SCALE, this.radius * SCALE, 0, Math.PI * 2, true);
@@ -303,6 +304,6 @@ function initCit() {
         };
         Box.prototype = Shape;
         
-        init.start('box2d-demo');
+        init.start('box2d-demo2');
     })();
 }
