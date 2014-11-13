@@ -133,11 +133,9 @@ ul {
 ul li {
 	display: inline;
 	width: 15px;
-	height: 12px;
+	height: 15px;
 	border-radius: 20px;
-	float:left;
 	border: 1px solid rgba(255,255,255,0.4);
-	margin-right: 17px;
 	cursor: pointer;
 }
 ul li:last-child {
@@ -164,7 +162,6 @@ ul li.selected:before {
 	height: 5px;
 	width: 5px;
 	content: '';
-	float: left;
 	-webkit-transform: rotate(45deg);
 	-moz-transform:    rotate(45deg);
 	-ms-transform:     rotate(45deg);
@@ -174,6 +171,7 @@ ul li.selected:before {
 	opacity: 1;
 	top: 23px;
 	left: 0px;
+	display: inline-block;
 }
 ul li:before {
 	opacity: 0;
