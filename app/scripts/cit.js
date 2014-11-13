@@ -241,12 +241,16 @@ function initCit() {
         
         var helpers = {
             randomColor: function() {
-                // var letters = '0123456789ABCDEF'.split(''),
-                //     color = '#';
-                // for (var i = 0; i < 6; i++ ) {
-                //     color += letters[Math.round(Math.random() * 15)];
-                // }
-                return '#ffffff';//'#'+(~~(Math.random()*(1<<24))).toString(16);
+                var color  = '#ffffff';
+                if (localStorage.getItem('konami')) {                
+                    var letters = '0123456789ABCDEF'.split('');
+                        color = '#';
+                    for (var i = 0; i < 6; i++ ) {
+                        color += letters[Math.round(Math.random() * 15)];
+                    }
+                    return color;
+                }
+                return color;
             }
         };
         
@@ -258,7 +262,7 @@ function initCit() {
             this.y = v.y || Math.random();
             this.rotate = v.rotate || 0;
             this.angle = 0;
-            // this.color = helpers.randomColor();
+            this.color = helpers.randomColor();
             this.center = { x: null, y: null };
             this.isStatic = v.isStatic || false;
             
@@ -281,7 +285,7 @@ function initCit() {
                 ctx.rotate(this.rotate);
                 ctx.lineWidth   = 2;
                 ctx.strokeStyle = 'rgb(37,87,127)';
-                ctx.fillStyle   = '#ffffff';
+                ctx.fillStyle   = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x * SCALE, this.y * SCALE, this.radius * SCALE, 0, Math.PI * 2, true);
                 ctx.closePath();

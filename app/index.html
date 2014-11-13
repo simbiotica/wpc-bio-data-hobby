@@ -1,10 +1,10 @@
 <html>
 <head>
-	<title>Bouncing Balls</title>
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+  <title>Bouncing Balls</title>
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-	<section>
+  <section>
       <div class="info">
          <h1>Biodiversity data: not just a hobby</h1>
          <p>Millions of people around the world go out every day and collect data about biodiversity. Some of these observations are by professionals and academics, whose job it is to collect data, but many citizens also collect data voluntarily. This visualization uses data from the Global Biodiversity Information Facility (GBIF) and compares the number of observations of birds made by professionals with those made by citizens for every year since 2000.</p>
@@ -28,13 +28,13 @@
       <div>
          <div id="total-citizens" class="score"><span></span>ocurrence records by citizens</div>
          <div id="total-professionals" class="score"><span></span>ocurrence records by professionals</div>
-   		<canvas id="box2d-demo" width="202" height="601" style="background-color:transparent;"></canvas>
-   		<canvas id="box2d-demo2" width="202" height="601" style="background-color:transparent;"></canvas>
+      <canvas id="box2d-demo" width="202" height="601" style="background-color:transparent;"></canvas>
+      <canvas id="box2d-demo2" width="202" height="601" style="background-color:transparent;"></canvas>
       </div>
    </section>
    <script src="scripts/Box2dWeb-2.1.a.3.min.js"></script>
-	<script src="scripts/cit.js"></script>
-	<script src="scripts/prof.js"></script>
+  <script src="scripts/cit.js"></script>
+  <script src="scripts/prof.js"></script>
    <script type="text/javascript">
       var tot_cit  = document.getElementById('total-citizens');
       var tot_pro  = document.getElementById('total-professionals');
@@ -139,6 +139,23 @@
          tot_cit.children[0].innerHTML = '<span>' + values.count_cit.toLocaleString()  + '</span>';
          tot_pro.children[0].innerHTML = '<span>' + values.count_pro.toLocaleString()  + '</span>';
       }
+
+      localStorage.removeItem('konami');
+      if (window.addEventListener) {
+          var keys = [],
+              konami = "38,38,40,40,37,39,37,39,66,65";
+
+          window.addEventListener("keydown", function(e){
+              keys.push(e.keyCode);
+              if (keys.toString().indexOf(konami) >= 0) {
+                  localStorage.setItem('konami', true);
+                  run();
+                  keys = [];
+              };
+          }, true);
+      };
+
+
 
       var run = function() {
          initValues();
