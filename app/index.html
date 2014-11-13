@@ -119,13 +119,13 @@
 
       var changeYear = function(e) {
          toggleSelected(e);
-         updateLocalYear();
       }
 
       var toggleSelected = function(e) {
          if (e.target.classList.contains('selected')) return;
          for (var i = 0; i < list.children.length; i++)  list.children[i].classList.remove('selected')
          e.target.classList.toggle('selected');
+         updateLocalYear();
          
          run();
       }
